@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Velo'v</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+</head>
+
+<body>
+<!--HEADER-->    
+  <div class="header">
+    <img src="img/Logo.gif" alt="logo de la société Velo'v"/>
+  </div>
+<!--FIN DE HEADER-->
+    
+<!--CAROUSSEL-->    
+<div class="slider-container">
+
+  <div class="mySlides fade">
+    <img src="img/1.jpg" style="width:100%">
+    <div class="text">Déscription de la première étape</div>
+  </div>
+
+  <div class="mySlides fade">
+    <img src="img/2.jpg" style="width:100%">
+    <div class="text">Déscription de la deuxième étape</div>
+  </div>
+
+  <div class="mySlides fade">
+    <img src="img/3.jpg" style="width:100%">
+    <div class="text">Déscription de la troisième étape</div>
+  </div>
+
+    <!-- boutons -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+    <br>
+    <!-- Points inférieurs -->
+    <div class="dots">
+        <div class="dot" onclick="currentSlide(1)"></div> 
+        <div class="dot" onclick="currentSlide(2)"></div> 
+        <div class="dot" onclick="currentSlide(3)"></div> 
+    </div>
+</div>
+<!--FIN DU CAROUSSEL-->      
+      
+<!--MAP VELO-->
+    <div class="map-container">
+        <div id="mapid"></div>
+        <div id="infostation">
+            <h3>Détails de la station</h3>
+            <p>Adresse :</p>
+            <p>Nombre de places :</p>
+            <p>Vélos disponobles :</p>
+            <p>Station : </p>
+        </div>
+    </div>
+<!--FIN MAP VELO-->
+    <script src="js/slider.js"></script>
+    <script src="js/carte.js"></script>
+
+</body>
+
+</html>
