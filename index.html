@@ -46,9 +46,9 @@
     <br>
     <!-- Points inférieurs -->
     <div class="dots">
-        <div class="dot" onclick="currentSlide(1)"></div> 
-        <div class="dot" onclick="currentSlide(2)"></div> 
-        <div class="dot" onclick="currentSlide(3)"></div> 
+        <div class="dot"></div> 
+        <div class="dot"></div> 
+        <div class="dot"></div> 
     </div>
 </div>
 <!--FIN DU CAROUSSEL-->      
@@ -56,18 +56,46 @@
 <!--MAP VELO-->
     <div class="map-container">
         <div id="mapid"></div>
-        <div id="infostation">
-            <h3>Détails de la station</h3>
-            <p>Adresse :</p>
-            <p>Nombre de places :</p>
-            <p>Vélos disponobles :</p>
-            <p>Station : </p>
+        <div id="timerReserv">
+          <span id="timer"></span>
         </div>
+        <div id="form">
+            <div id="infoStation">
+                <h3>Détails de la station <br/> <span id="stationName"></span></h3>
+                <p>Adresse : <span id="adresse"></span></p>
+                <p >Nombre de places : <span id="nbrePlaces"></span></p>
+                <p>Vélos disponibles : <span id="nbreVelos"></span></p>
+                <p>Station : <span id="statusStation"></span></p>
+                <button id="button">Reserver</button>
+            </div>
+           <div id="reservation">
+               <div id="formulaire">
+                  <div id="champNom">
+                      <label id="indicNom">Votre Nom  </label>
+                      <input type="text" id="formNom">
+                  </div>
+                 <div id="champPrenom">
+                    <label id="indicPrenom">Votre Prénom  </label>
+                    <input type="text" id="formPrenom">
+                  </div>
+               </div>
+            </div>
+            <div id="signature">
+              <h3 id ="indicCanvas">Signature</h3>
+              <canvas id="canvas"></canvas><br/>
+              <button id="finalButton"> C'est parti !</button><br/><br/>
+            </div>
+
+        </div>
+
     </div>
 <!--FIN MAP VELO-->
-    <script src="js/slider.js"></script>
+     
+    <script src="js/sliderPOO.js"></script>
     <script src="js/carte.js"></script>
-
+    <script src="js/reservation.js"></script>
+    <script src="js/canvas.js"></script>
+    <script src="js/timer.js"></script>
 </body>
 
 </html>
