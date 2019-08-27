@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>Velo'v</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width">
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
@@ -46,28 +46,72 @@
     <br>
     <!-- Points inférieurs -->
     <div class="dots">
-        <div class="dot" onclick="currentSlide(1)"></div> 
-        <div class="dot" onclick="currentSlide(2)"></div> 
-        <div class="dot" onclick="currentSlide(3)"></div> 
+        <div class="dot"></div> 
+        <div class="dot"></div> 
+        <div class="dot"></div> 
     </div>
 </div>
 <!--FIN DU CAROUSSEL-->      
       
 <!--MAP VELO-->
+  <div id="container">
     <div class="map-container">
         <div id="mapid"></div>
-        <div id="infostation">
-            <h3>Détails de la station</h3>
-            <p>Adresse :</p>
-            <p>Nombre de places :</p>
-            <p>Vélos disponobles :</p>
-            <p>Station : </p>
+
+        <div id="form">
+            <div id="infoStation">
+                <h3>Détails de la station <br/> <span id="stationName"></span></h3>
+                <p>Adresse : <span id="adresse"></span></p>
+                <p >Nombre de places : <span id="nbrePlaces"></span></p>
+                <p>Vélos disponibles : <span id="nbreVelos"></span></p>
+                <p>Station : <span id="statusStation"></span></p>
+                <button id="reservbutton">Reserver</button>
+            </div>
+
+            <div id="reservation">
+              <div id="formulaire">
+                <div id="champNom">
+                  <label id="indicNom">Votre Nom </label><br/>
+                  <input type="text" id="inputNom"/></br>
+                </div></br>
+                <div id="champPrenom">
+                  <label id="indicPrenom">Votre Prenom </label></br>
+                  <input type="text" id="inputPrenom"/></br>
+                </div><br/>
+                <button id="formButton">Suivant</button>
+              </div>              
+            </div>
         </div>
     </div>
-<!--FIN MAP VELO-->
-    <script src="js/slider.js"></script>
-    <script src="js/carte.js"></script>
+        
+    <div id="finalisation">
+      <div class="empty"></div>
+      <div id="panel">
+        <div id="canvasBloc">
+          <h3 id="indicCanvas">Signature</h3>
+          <canvas id="canvas"></canvas><br/>
+          <button id="finalButton"> C'est parti !</button>
+        </div>
 
+          <div id="timerBloc">
+            <h3 id="indicTimer">Reservation en cours</h3>
+            <div id="timer"></div>
+          </div>
+      </div> 
+      <div class="empty"></div>
+    </div>
+  </div>
+  
+<!--FIN MAP VELO-->
+   
+  <div id="footer"></div>
+
+
+  <script src="js/ajax.js"></script>
+  <script src="js/sliderPOO.js"></script>
+  <script src="js/cartepoo.js"></script>
+  <script src="js/canvas.js"></script>
+  <script src="js/timer.js"></script>
 </body>
 
 </html>
