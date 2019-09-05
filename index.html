@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <title>Velo'v</title>
     <meta name="viewport" content="width=device-width">
-     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    <link rel="icon" href="img/Logo.ico" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
    crossorigin=""/>
      <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
@@ -17,7 +18,7 @@
 <body>
 <!--HEADER-->    
   <div class="header">
-    <img src="img/Logo.gif" alt="logo de la société Velo'v"/>
+    <img id="logo" src="img/Logo.gif" alt="logo de la société Velo'v"/>
   </div>
 <!--FIN DE HEADER-->
     
@@ -35,21 +36,21 @@
   </div>
 
   <div class="mySlides fade">
-    <img src="img/3.jpg" style="width:100%">
+    <img src="img/3.jpg" style="width:100%" >
     <div class="text">Déscription de la troisième étape</div>
   </div>
 
-    <!-- boutons -->
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  <div class="mySlides fade">
+    <img src="img/4.jpg" style="width:100%">
+    <div class="text">Déscription de la quatrième étape</div>
+  </div>
 
+    <!-- boutons -->
+    <span id="prev" >&#10094;</span>
+    <span id="next">&#10095;</span>
+    <button class ="fade" id="stop">Pause / Reprendre</button>
     <br>
-    <!-- Points inférieurs -->
-    <div class="dots">
-        <div class="dot"></div> 
-        <div class="dot"></div> 
-        <div class="dot"></div> 
-    </div>
+
 </div>
 <!--FIN DU CAROUSSEL-->      
       
@@ -85,20 +86,19 @@
     </div>
         
     <div id="finalisation">
-      <div class="empty"></div>
       <div id="panel">
-        <div id="canvasBloc">
+        <span id="canvasBloc">
           <h3 id="indicCanvas">Signature</h3>
           <canvas id="canvas"></canvas><br/>
           <button id="finalButton"> C'est parti !</button>
-        </div>
+        </span>
 
           <div id="timerBloc">
             <h3 id="indicTimer">Reservation en cours</h3>
             <div id="timer"></div>
+            <button id="cancel">Annuler</button>
           </div>
       </div> 
-      <div class="empty"></div>
     </div>
   </div>
   
@@ -108,8 +108,8 @@
 
 
   <script src="js/ajax.js"></script>
-  <script src="js/sliderPOO.js"></script>
-  <script src="js/cartepoo.js"></script>
+  <script src="js/slider.js"></script>
+  <script src="js/carte.js"></script>
   <script src="js/canvas.js"></script>
   <script src="js/timer.js"></script>
 </body>
