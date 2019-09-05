@@ -4,7 +4,7 @@ body {
 
 .header{
     text-align: center;
-    margin: 45px;
+    margin: auto;
 }
 
 * {box-sizing:border-box}
@@ -18,12 +18,16 @@ body {
   margin-bottom: 30px;
 }
 
-.mySlides {
+.mySlides{
   display: none;
 }
 
+.active{
+  display: block;
+}
+
 /* bouton précédent et suivant */
-.prev, .next {
+#prev, #next {
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -40,13 +44,13 @@ body {
 
 
 /* Positionnement bouton suivant */
-.next {
+#next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
 
 /* hover flèches */
-.prev:hover, .next:hover {
+#prev:hover, #next:hover {
   background-color: rgba(0,0,0,0.8);
 }
 
@@ -60,22 +64,6 @@ body {
   bottom: 8px;
   width: 100%;
   text-align: center;
-}
-
-.dots {
-    text-align: center;
-    cursor : default;
-}
-
-/* points */
-.dot {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
 }
 
 .active {
@@ -98,6 +86,23 @@ body {
 @keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}
+}
+
+button{
+    border-radius:  0 12px 0 12px ;
+    background: #ff0000;
+    border:none;
+    color:#fff;
+    padding:6px 6px 6px 6px;
+}
+
+button:hover{
+  cursor : pointer;
+}
+
+#stop{
+  align-items: center;
+  border-radius:  0 0 12px 12px ;
 }
 
 /*MAP*/
@@ -156,9 +161,8 @@ input{
 
 #finalisation{
   display : flex;
-  justify-content: space-between;
-  margin : 3.45%;
-  padding: 20px;
+  justify-content: center;
+  margin : 70px -8px;
 
 }
 
@@ -170,6 +174,7 @@ input{
   display :block;
   display : none;
   position: relative;
+  text-align: center;
   
 }
 
@@ -180,10 +185,12 @@ input{
     padding-right: 0;
     margin-left: auto;
     margin-right: auto;
-    display: inline;
+    /* display: inline; */
     justify-self: center;
-    min-width : 300px;
-    min-height : 300px;
+    min-width : auto;
+    min-height : auto;
+    max-width: 300px;
+    max-height : 300px;
     border : 3px solid grey;
     background-color: white;
     border-radius : 15px;
@@ -203,7 +210,6 @@ input{
 }
 
 #panel{
-  margin-top: 5%;
   padding : 10px;
   width : 45%;
   text-align: center;
@@ -260,14 +266,18 @@ input{
   }
 
   #panel{
-    margin-top : 5%; 
-    margin-left: -20px;    
+    margin-top : 0px;
+    margin-left : 0px;
     position: absolute;
     width: 90%;
     margin-bottom: 50px;
   }
 
-
-
+  #canvas{
+    margin: 0 auto;
+    width : 250px;
+    height : 250px;
+    
+  }
 } 
 
