@@ -40,19 +40,27 @@ class Slider {
 	}
 
 	next = e => {
-		let currentSlide = document.getElementsByClassName('active')[0];
-		let currentPosition = parseInt(currentSlide.getAttribute('position'));
-		let nextPosition = currentPosition+1;
-		if(nextPosition > (this.slides.length-1)) nextPosition = 0;
-		this.switchSlide(nextPosition);
+		if(this.timer){
+			clearInterval(this.timer)
+			let currentSlide = document.getElementsByClassName('active')[0];
+			let currentPosition = parseInt(currentSlide.getAttribute('position'));
+			let nextPosition = currentPosition+1;
+			if(nextPosition > (this.slides.length-1)) nextPosition = 0;
+			this.switchSlide(nextPosition);
+			this.timer = setInterval(this.next, this.delay)
+		} else {
+			this.timer = setInterval(this.next, this.delay)
+		}
 	}
 
 	previous = e => {
+		clearInterval(this.timer)
 		let currentSlide = document.getElementsByClassName('active')[0];
 		let currentPosition = parseInt(currentSlide.getAttribute('position'));
 		let previousPosition = currentPosition-1;
 		if(previousPosition < 0) previousPosition = (this.slides.length-1);
 		this.switchSlide(previousPosition);
+		this.timer = setInterval(this.next,this.delay)
 	}
 
 	togglePause = e => {
@@ -63,19 +71,18 @@ class Slider {
             document.getElementById("stop").style.background = "lightgrey"
             document.getElementById("stop").style.color = "#333333"
 		} else {
-            clearInterval(this.timer)
             this.isPaused = false;
             document.getElementsByClassName('active')[0].style.opacity = "1"
             document.getElementById("stop").style.background = "#ff0000"
             document.getElementById("stop").style.color = "#fff"
-            setInterval(this.next, this.delay)
+            this.timer = setInterval(this.next, this.delay);
         }
 	}
 
 	handleKeyboard = e => {
 		if(e.keyCode == "37") {
             clearInterval(this.timer)
-            setInterval(this.next, this.delay)
+            this.timer = setInterval(this.next, this.delay)
             this.previous();
 		} else if (e.keyCode =="39") {
             this.next()

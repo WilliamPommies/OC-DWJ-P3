@@ -67,42 +67,75 @@ class Timer{
         }
     }   
 }
-        
 
-const timer = new Timer("timer", 30000)
+let timer = new Timer("timer", 1200000)
 
 
-function clic(){
-    const timer = new Timer("timer", 30000)
-    document.getElementById("timerBloc").style.display = "initial"
+
+//lancement du timer
+function phaseFinale(){
+    //réinitialisation du timer en cas de nouvelle réservation
+    sessionStorage.removeItem("startDate") 
+    clearInterval(timer.interval)
+    clearInterval(timer.updateTime)
+    // initialisation du timer
+    timer = new Timer("timer", 1200000)
+    // enregistrement des information
     const stationReservation = document.getElementById("stationName").textContent
     sessionStorage.setItem("stationReservation", stationReservation)
-    const velos = parseInt(document.getElementById("nbreVelos").textContent) - 1
+    const velos = parseInt(document.getElementById("nbreVelos").textContent)
     sessionStorage.setItem("velos", velos)
+    // affichage
+    document.getElementById("timerBloc").style.display = "initial"
     document.getElementById("finalisation").style.backgroundColor = ""
     document.getElementById("panel").style.border = "4px red dashed"  
+    document.getElementById("nbreVelos").textContent = sessionStorage.getItem("velos") - 1
+    document.getElementById("canvasBloc").style.display = "none"
+    // lancement du timer
     timer.getRemainingTime()
     timer.run()
-    document.getElementById("nbreVelos").textContent = sessionStorage.getItem("velos")
-    document.getElementById("canvasBloc").style.display = "none"
 }
 
-let buttonElement = document.getElementById("finalButton")
-buttonElement.addEventListener("click", clic)
+//annulation d'une reservation
+function cancel(){
+    if(sessionStorage.getItem("startDate") > 1){
+        // arrêt du timer
+         clearInterval(timer.interval)
+         clearInterval(timer.updateTime)
+        //  réaffichage du nombre de vélos initial
+         document.getElementById("nbreVelos").textContent = sessionStorage.getItem("velos")
+        // suppression des informations stockées
+        sessionStorage.removeItem("startDate")
+        sessionStorage.removeItem("stationReservation")
+        sessionStorage.removeItem("velos")
+         //  suppression des éléments affichés
+         document.getElementById("timerBloc").style.display = "none"
+         document.getElementById("panel").style.border = "0px"
+    }
+}
 
+//affichage en cas de rechargement
 function onLoad(){
-    if(sessionStorage.getItem("startDate") === null){
-        
-    } else {
+    if(sessionStorage.getItem("startDate")){
+        // affichage d'une alerte
         alert("vous avez une reservation en cours à la station " + sessionStorage.getItem("stationReservation"))
+        // affichage du timer en cours
         document.getElementById("timer").scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
         document.getElementById("infoStation").style.display = "none"
         document.getElementById("formulaire").style.display = "none"
         document.getElementById("timerBloc").style.display = "initial"
         document.getElementById("panel").style.border = "4px red dashed"  
+        // nouvelle initialisation du timer
         timer.getRemainingTime()
         timer.run()   
     }
 }
+
+// Evénements au clic
+let goButton = document.getElementById("finalButton")
+goButton.addEventListener("click", phaseFinale)
+
+let cancelButton = document.getElementById("cancel")
+cancelButton.addEventListener("click", cancel)
 
 window.addEventListener("load", onLoad)
