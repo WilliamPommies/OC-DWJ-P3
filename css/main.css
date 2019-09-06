@@ -24,6 +24,7 @@ body {
 
 .active{
   display: block;
+  background-color: #717171;
 }
 
 /* bouton précédent et suivant */
@@ -66,9 +67,6 @@ body {
   text-align: center;
 }
 
-.active {
-  background-color: #717171;
-}
 
 /* animation */
 .fade {
@@ -173,7 +171,7 @@ input{
   padding: 5%;
   display :block;
   display : none;
-  position: relative;
+  /* position: relative; */
   text-align: center;
   
 }
@@ -199,6 +197,7 @@ input{
 
 #finalButton{
   display : none !important;
+  margin-left: 35px;
 }
 
 #timerBloc{
@@ -254,7 +253,7 @@ input{
   }
 
   #infoStation{
-    padding: -500px;
+    padding : 20px 0 20px 0;
   }
 
   #form{
@@ -278,6 +277,10 @@ input{
     width : 250px;
     height : 250px;
     
+  }
+
+  #finalButton{
+    margin-left: 0px;
   }
 } 
 
