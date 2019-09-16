@@ -10,6 +10,7 @@ class Timer{
     }
   
     getRemainingTime(){
+        //récupération du Timestamp
         const now =  new Date()
         const nowTime = now.getTime()
         const diff = (this.startDate + this.delay) - nowTime
@@ -23,28 +24,29 @@ class Timer{
     }
   
     run(){
+        //récupération des données de temps
         if (!this.startDate) {
             const now = new Date()
             this.startDate = now.getTime()
             sessionStorage.setItem("startDate", this.startDate)
         } 
   
-        this.station = document.getElementById("stationName")
-        sessionStorage.setItem("station", this.station)
-  
         const updateTime  = ()=>{
           const remainingTime = this.getRemainingTime()
   
           if(remainingTime===0) {
+              //arrêt du timer à la fin du compte à rebours
               clearInterval(this.interval)
-              document.getElementById("timerBloc").style.display = "none"
+              //Supression des données enregistrées et masquage de l'encart en fin de compte à rebours
+              document.getElementById("timerBlock").style.display = "none"
               sessionStorage.removeItem("startDate")
-              sessionStorage.removeItem("stationReservation")
-              sessionStorage.removeItem("velos")
+              sessionStorage.removeItem("currentStation")
+              sessionStorage.removeItem("bikes")
               document.getElementById("panel").style.border = "0px"
              
           
           }
+          //initialisation du timer
           this.render(remainingTime)
       }
           updateTime()
@@ -52,26 +54,30 @@ class Timer{
     }
   
     render(remainingTime) {
+        //conversion du temps au format min:sec
       let minutes = Math.floor(remainingTime / 60000);
       let seconds = Math.floor((remainingTime % 60000) / 1000).toFixed(0);
+        //affichage textuel
           if (isNaN(minutes) && isNaN(seconds)) {
               this.el.textContent = " "
           } else if(minutes >= 1) {
-              this.el.textContent  = "Vous avez reservé un vélo sur la station "+ sessionStorage.getItem("stationReservation") + " - "+ minutes + "m:" + seconds + "s restantes avant expiration de la reservation"            
+              this.el.textContent  = "Vous avez réservé un vélo sur la station "+ sessionStorage.getItem("currentStation") + " - "+ minutes + "m:" + seconds + "s restantes avant expiration de la réservation"            
           }else if(seconds <= 0) {
-              this.el.textContent  = "Reservation expirée"            
+              this.el.textContent  = "Réservation expirée"            
           } else {
-              this.el.textContent = "Vous avez reservé un vélo sur la station "+ sessionStorage.getItem("stationReservation") + " - " + seconds + "s restantes avant expiration de la reservation"
+              this.el.textContent = "Vous avez réservé un vélo sur la station "+ sessionStorage.getItem("currentStation") + " - " + seconds + "s restantes avant expiration de la réservation"
           }
       }   
   }
   
+
+  //lancement du timer
   let timer = new Timer("timer", 1200000)
   
   
   
-  //lancement du timer
-  function phaseFinale(){
+  
+  function finalePhase(){
       //réinitialisation du timer en cas de nouvelle réservation
       sessionStorage.removeItem("startDate") 
       clearInterval(timer.interval)
@@ -79,16 +85,16 @@ class Timer{
       // initialisation du timer
       timer = new Timer("timer", 1200000)
       // enregistrement des information
-      const stationReservation = document.getElementById("stationName").textContent
-      sessionStorage.setItem("stationReservation", stationReservation)
-      const velos = parseInt(document.getElementById("nbreVelos").textContent)
-      sessionStorage.setItem("velos", velos)
+      const currentStation = document.getElementById("stationName").textContent
+      sessionStorage.setItem("currentStation", currentStation)
+      const bikes = parseInt(document.getElementById("bikeCounter").textContent)
+      sessionStorage.setItem("bikes", bikes)
       // affichage
-      document.getElementById("timerBloc").style.display = "initial"
-      document.getElementById("finalisation").style.backgroundColor = ""
+      document.getElementById("timerBlock").style.display = "initial"
+      document.getElementById("finalStep").style.backgroundColor = ""
       document.getElementById("panel").style.border = "4px red dashed"  
-      document.getElementById("nbreVelos").textContent = sessionStorage.getItem("velos") - 1
-      document.getElementById("canvasBloc").style.display = "none"
+      document.getElementById("bikeCounter").textContent = sessionStorage.getItem("bikes") - 1
+      document.getElementById("canvasBlock").style.display = "none"
       // lancement du timer
       timer.getRemainingTime()
       timer.run()
@@ -101,13 +107,13 @@ class Timer{
            clearInterval(timer.interval)
            clearInterval(timer.updateTime)
           //  réaffichage du nombre de vélos initial
-           document.getElementById("nbreVelos").textContent = sessionStorage.getItem("velos")
+           document.getElementById("bikeCounter").textContent = sessionStorage.getItem("bikes")
           // suppression des informations stockées
           sessionStorage.removeItem("startDate")
-          sessionStorage.removeItem("stationReservation")
-          sessionStorage.removeItem("velos")
+          sessionStorage.removeItem("currentStation")
+          sessionStorage.removeItem("bikes")
            //  suppression des éléments affichés
-           document.getElementById("timerBloc").style.display = "none"
+           document.getElementById("timerBlock").style.display = "none"
            document.getElementById("panel").style.border = "0px"
       }
   }
@@ -116,12 +122,9 @@ class Timer{
   function onLoad(){
       if(sessionStorage.getItem("startDate")){
           // affichage d'une alerte
-          alert("vous avez une reservation en cours à la station " + sessionStorage.getItem("stationReservation"))
+          alert("vous avez une réservation en cours à la station " + sessionStorage.getItem("currentStation"))
           // affichage du timer en cours
-          document.getElementById("timer").scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
-          document.getElementById("infoStation").style.display = "none"
-          document.getElementById("formulaire").style.display = "none"
-          document.getElementById("timerBloc").style.display = "initial"
+          document.getElementById("timerBlock").style.display = "initial"
           document.getElementById("panel").style.border = "4px red dashed"  
           // nouvelle initialisation du timer
           timer.getRemainingTime()
@@ -131,7 +134,7 @@ class Timer{
   
   // Evénements au clic
   let goButton = document.getElementById("finalButton")
-  goButton.addEventListener("click", phaseFinale)
+  goButton.addEventListener("click", finalePhase)
   
   let cancelButton = document.getElementById("cancel")
   cancelButton.addEventListener("click", cancel)

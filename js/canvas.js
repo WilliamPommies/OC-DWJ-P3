@@ -18,7 +18,7 @@ class Drawer {
         this.canvas.addEventListener("touchend", this.finDessinTactile.bind(this))
     }
 
-        drawLigne() {
+        drawLine() {
             if(this.drawing === true){
                 this.ctx.moveTo(this.lastPos.x,this.lastPos.y)
                 this.ctx.lineTo(this.mousePos.x,this.mousePos.y)
@@ -29,46 +29,54 @@ class Drawer {
         }
 
         debutDessin() {
+            //début du dessin avec événement souris
             this.drawing = true
+            //affichage du bouton "c'est parti" suite à la validation d'une signature
             document.getElementById("finalButton").setAttribute("style", "display : initial !important")
         }
 
         debutDessinTactile(e) {
-            this.lastPos.x = e.touches[0].clientX - this.canvas.getBoundingClientRect().left;
-            this.lastPos.y = e.touches[0].clientY - this.canvas.getBoundingClientRect().top;
-            this.drawing = true;
-            e.preventDefault();
+            //début du dessin avec événement tactile
+            this.lastPos.x = e.touches[0].clientX - this.canvas.getBoundingClientRect().left
+            this.lastPos.y = e.touches[0].clientY - this.canvas.getBoundingClientRect().top
+            this.drawing = true
+            //empêche le scroll lors du toucher du canvas
+            e.preventDefault()
             }
 
 
         dessin(e){
-            this.mousePos.x = e.clientX - this.canvas.getBoundingClientRect().left;
-            this.mousePos.y = e.clientY - this.canvas.getBoundingClientRect().top;
-            this.drawLigne();
-            this.lastPos.x = e.clientX - this.canvas.getBoundingClientRect().left;
-            this.lastPos.y = e.clientY  - this.canvas.getBoundingClientRect().top;
+            //dessin avec événement souris de mouvement
+            this.mousePos.x = e.clientX - this.canvas.getBoundingClientRect().left
+            this.mousePos.y = e.clientY - this.canvas.getBoundingClientRect().top
+            this.drawLine()
+            this.lastPos.x = e.clientX - this.canvas.getBoundingClientRect().left
+            this.lastPos.y = e.clientY  - this.canvas.getBoundingClientRect().top
         }
         
 
-        dessinTactile(e){         
+        dessinTactile(e){
+            //dessin avec événement tactile de mouvement         
             this.drawing = true
-            this.mousePos.x = e.touches[0].clientX - this.canvas.getBoundingClientRect().left;
-            this.mousePos.y = e.touches[0].clientY - this.canvas.getBoundingClientRect().top;
-            this.drawLigne();
-            this.lastPos.x = e.touches[0].clientX - this.canvas.getBoundingClientRect().left;
-            this.lastPos.y = e.touches[0].clientY - this.canvas.getBoundingClientRect().top;
-            e.preventDefault();
+            this.mousePos.x = e.touches[0].clientX - this.canvas.getBoundingClientRect().left
+            this.mousePos.y = e.touches[0].clientY - this.canvas.getBoundingClientRect().top
+            this.drawLine()
+            this.lastPos.x = e.touches[0].clientX - this.canvas.getBoundingClientRect().left
+            this.lastPos.y = e.touches[0].clientY - this.canvas.getBoundingClientRect().top
+            e.preventDefault()
 
             document.getElementById("finalButton").setAttribute("style", "display : initial !important")
         }
 
         finDessin(e) {
+            //arrêt du dessin avec événement souris
             this.drawing = false
         }
 
         finDessinTactile (e) {
-            this.drawing = false;
-            e.preventDefault();
+            //arrêt du dessin avec événement tactile
+            this.drawing = false
+            e.preventDefault()
         }
      
 }

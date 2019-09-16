@@ -10,12 +10,13 @@ class Map{
         }).addTo(this.mymap);
 
         this.url = contract
-        this.afficher()
-        this.reservation()
+        
+        this.booking()
+        this.display()
     }
 
 
-    afficher() {
+    display() {
         ajaxGet(this.url, (reponse) => {
             let results = JSON.parse(reponse);
 
@@ -24,36 +25,36 @@ class Map{
                 const marker = L.marker([station.position.lat,station.position.lng])
                 marker.options.station = station
                 marker.addTo(this.mymap)
-                marker.addEventListener('click', function(e) {
-
+                marker.addEventListener('click', ()=> {
+                    //réinitialisation du canvas en cas de reservation lors d'une réservation en cours
                     const context = canvas.getContext("2d")
                     context.clearRect(0, 0, canvas.width, canvas.height)
-
+                    //Affichage du panneau latéral
                     if(document.getElementById("infoStation").style.display == "none"){
                         document.getElementById("infoStation").style.display = "initial"
                     }
+                    //Renommage du status de la station en Français
                     let status
                     if (station.status == "OPEN") {
                         status = "Ouverte"
                     } else if (station.status == "CLOSED") {
                         status = "Fermée"
                     }
-                    
+                    //Affichage des informations stations
                     let stationNameField = document.getElementById("stationName")
-                    let adresseField = document.getElementById("adresse")
-                    let nbrePlacesField = document.getElementById("nbrePlaces")
-                    let nbreVelosField = document.getElementById("nbreVelos")
-                    let statusStationField = document.getElementById("statusStation")
+                    let adresseField = document.getElementById("adress")
+                    let nbrePlacesField = document.getElementById("slotNumber")
+                    let nbreVelosField = document.getElementById("bikeCounter")
+                    let stationStatusField = document.getElementById("stationStatus")
 
                     stationNameField.textContent = station.name
                     adresseField.textContent = station.address
                     nbrePlacesField.textContent = station.available_bike_stands
                     nbreVelosField.textContent = station.available_bikes
-                    statusStationField.textContent = status    
-                    const reservButton = document.getElementById("reservbutton")
-                    if (reservButton) {
-                    reservButton.style.display = "initial"
-                    }
+                    stationStatusField.textContent = status
+                    //affichage du bouton "réserver"    
+                    const bookingButton = document.getElementById("bookingButton")
+                    bookingButton.style.display = "initial"
 
                 })
 
@@ -61,50 +62,52 @@ class Map{
         })
     }
 
-    reservation() {
-        let bookingStepOne = document.getElementById("reservbutton")
-        bookingStepOne.addEventListener("click", () => {
-            let veloDispo = document.getElementById("nbreVelos").textContent
-            let statusStation = document.getElementById("statusStation").textContent
-            if(veloDispo <= 0) {
+    booking() {
+        //vérification des vélos dans la station
+        const bookingButton = document.getElementById("bookingButton")
+        bookingButton.addEventListener("click", () => {
+            let bikeCount = document.getElementById("bikeCounter").textContent
+            let stationStatus = document.getElementById("stationStatus").textContent
+            if(bikeCount <= 0) {
                 alert("Aucun vélo n'est disponible, veuillez trouver une autre station")
-            } else if (statusStation == "Fermée") {
+            } else if (stationStatus == "Fermée") {
                 alert("Cette station est actuellement fermée")
             } else {
                 //affichage et suppression des boutons
-                document.getElementById("reservbutton").style.display = "none"  
-                document.getElementById("reservation").style.display = "initial"
+                document.getElementById("bookingButton").style.display = "none"  
+                document.getElementById("booking").style.display = "initial"
 
                 //recupération des données du Local Storage
-                let autoCompNom = document.getElementById("inputNom")
-                let autoCompPrenom = document.getElementById("inputPrenom")
+                let autoCompName = document.getElementById("inputName")
+                let autoCompFirstname = document.getElementById("inputFirstname")
                 
                 if(localStorage){
-                    autoCompNom.value = localStorage.getItem("nom")
-                    autoCompPrenom.value = localStorage.getItem("prenom")
+                    autoCompName.value = localStorage.getItem("nom")
+                    autoCompFirstname.value = localStorage.getItem("prenom")
                 } else {
-                    autoCompNom.value =""
-                    autoCompPrenom.value =""
+                    autoCompName.value = ""
+                    autoCompFirstName.value = ""
                 }
 
-
+                //verification des champs vides
                 const bookingStepTwo = document.getElementById("formButton");
                 bookingStepTwo.addEventListener("click", () =>{
         
-                    //verification des champs vides        
-                    if (autoCompNom.value =="" && autoCompPrenom.value =="") {
+                            
+                    if (autoCompName.value =="" && autoCompFirstname.value =="") {
                         alert("Merci de renseigner le formulaire")
-                    } else if (autoCompNom.value =="" || autoCompPrenom.value =="" ){
+                    } else if (autoCompName.value =="" || autoCompFirstname.value =="" ){
                         alert("il semblerait que vous ayez oublié de renseigner un champ")
                     } else {
-                        let champNom = document.getElementById("inputNom").value
-                        let champPrenom = document.getElementById("inputPrenom").value
+                        let userNameField = document.getElementById("inputName").value
+                        let userFirstnameField = document.getElementById("inputFirstname").value
 
-                        
-                        localStorage.setItem("nom", champNom)
-                        localStorage.setItem("prenom", champPrenom)
-                        document.getElementById("canvasBloc").style.display = "initial"
-                        document.getElementById("reservation").style.display = "none"
+                        //enregistrement dans le Local Storage
+                        localStorage.setItem("nom", userNameField)
+                        localStorage.setItem("prenom", userFirstnameField)
+                        //affichage et masquage des boutons
+                        document.getElementById("canvasBlock").style.display = "initial"
+                        document.getElementById("booking").style.display = "none"
                         document.getElementById("finalButton").style.display = "initial"
                         document.getElementById("canvas").scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
                     }
